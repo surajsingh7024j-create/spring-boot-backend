@@ -27,7 +27,8 @@ public class AuthService {
         }
         User user= new User();
         user.setName(signUpRequest.getName());// esse ek empaty user object banta ha // user object ke username me save
-        user.setEmail(signUpRequest.getEmail());        // esme data set karte ha
+        user.setEmail(signUpRequest.getEmail());// esme data set karte ha
+        user.setNumber(signUpRequest.getNumber());
         user.setUsername(signUpRequest.getUsername());
         user.setPassword(passwordEncoder.encode(signUpRequest.getPassword()));// password ko encrypt karta ha
         user.setConfirmedPassword(passwordEncoder.encode(signUpRequest.getPassword()));
@@ -36,12 +37,24 @@ public class AuthService {
     }
     // login
     public AuthResponse Login(LoginRequest loginRequest){
+        System.out.println("LOGIN EMAIL="+loginRequest.getEmail());
+        System.out.println("LOGIN PASSWORD="+loginRequest.getPassword());
+        System.out.println("ALL USERS="+userRepository.findAll());
         User user = userRepository.findByEmail(loginRequest.getEmail()).orElseThrow(()->new RuntimeException("user Not Found"));
+        System.out.println("BD PASSWORD="+user.getPassword());
         boolean passwordMatches = passwordEncoder.matches(loginRequest.getPassword(), user.getPassword());
+        System.out.println("PASSWORD MATCH="+passwordMatches);
         if (!passwordMatches) {         // pasword galat ho
             throw new RuntimeException("Password Do Not Match");        // tab ye bhejega
         }
-        String token = jwtService.generateToken(user.getEmail(),  user.getPassword());      // user ka email jwt subject me jayega
-        return new AuthResponse(token);
+//       System.out.println("GENERATE TOKEN=");
+       String token = jwtService.generateToken(user.getEmail(),  user.getPassword());
+   //    System.out.println("TOKEN="+token);// user ka email jwt subject me jayega
+       return new AuthResponse(token);
+    }
+    public void updateFcmToken(Long userId, String token){
+        User user = userRepository.findById(userId).orElseThrow(()->new RuntimeException("user not found"));
+        user.setFcmToken(token);
+                userRepository.save(user);
     }
 }

@@ -12,6 +12,11 @@ target/
 .settings
 .springBeans
 .sts4-cache
+firebase-service-account.json
+application-local.properties
+application-local.yml
+
+.env
 
 ### IntelliJ IDEA ###
 .idea
