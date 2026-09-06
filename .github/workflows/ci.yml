@@ -24,4 +24,6 @@ jobs:
           distribution: 'temurin'
 
       - name: Build Spring Boot
-        run: ./mvnw clean package -DskipTests
+        run: |
+            chmod +x ./mvnw
+            ./mvnw clean package -DskipTests
