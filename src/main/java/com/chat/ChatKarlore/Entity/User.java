@@ -24,6 +24,6 @@ public class User {
     private String password;
     @Column(nullable = false)
     private String ConfirmedPassword;
-    @Column(name = "fcm_token", length = 1000)
+    @Column(name = "fcm_token")
     private String fcmToken;
 }

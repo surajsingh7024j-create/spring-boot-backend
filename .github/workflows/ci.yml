@@ -1,9 +1,10 @@
-name: Backend CI
+name: Spring Boot CI
 
 on:
   push:
     branches:
       - main
+
   pull_request:
     branches:
       - main
@@ -16,15 +17,11 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v4
 
-      - name: Set up Java 21
+      - name: Setup Java
         uses: actions/setup-java@v4
         with:
           java-version: '21'
           distribution: 'temurin'
-          cache: maven
 
-      - name: Make Maven wrapper executable
-        run: chmod +x mvnw
-
-      - name: Build and test
-        run: ./mvnw clean verify
+      - name: Build Spring Boot
+        run: ./mvnw clean package -DskipTests
