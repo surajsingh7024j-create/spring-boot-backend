@@ -1,0 +1,19 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: chatkarlore
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: chatkarlore
+  template:
+    metadata:
+      labels:
+        app: chatkarlore
+    spec:
+      containers:
+        - name: chatkarlore
+          image: ghcr.io/surajsingh7024j-create/spring-boot-backend:latest
+          ports:
+            - containerPort: 8080
