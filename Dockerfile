@@ -1,4 +1,4 @@
-FROM eclipse-termurin:21-jre
+FROM eclipse-temurin:21-jre-jammy
 WORKDIR /app
 COPY terget/*.jar app.jar
 EXPOSE 8080
